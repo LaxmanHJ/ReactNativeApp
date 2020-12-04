@@ -182,17 +182,16 @@ this.validatepwd();
         <TouchableOpacity onPress={() => this.props.navigation.navigate('Auth')} >
               <Icon name={'ios-arrow-back'} size={22} color='black' style={{marginLeft: '3%',paddingTop:'50%'}}/>
        </TouchableOpacity> 
-       <Text style={styles.logo}>ADIS</Text>
+       <Text style={styles.logo}>PiedPiper</Text>
        </View>
 
          <ScrollView>
           <Text style={styles.fontview}>SignUp </Text>
-          <Text style={styles.queryview}> MobileNumber/mailId</Text>
+          <Text style={styles.queryview}> UserName</Text>
           <View style={styles.inputView} >
           <TextInput  
           
             style={styles.inputText}
-            placeholder="Mobile No/mail*...." 
             placeholderTextColor="gray"
             keyboardType="numeric"
             onChangeText={(phone) => this.setState({phone})}
@@ -217,7 +216,7 @@ this.validatepwd();
           <TextInput  
         
             style={styles.inputText}
-            placeholder="DoB..." 
+            placeholder="yyy-mm-dd..." 
             placeholderTextColor="gray"
             keyboardType="numeric"
             // onChangeText={aadhar => {this.setState({aadhar});this.onsubmitaadhar()}}/>
@@ -321,8 +320,8 @@ const styles = StyleSheet.create({
 },
   logo:{
     fontWeight:"bold",
-    fontSize:40,
-    color:"#fb5b5a",
+    fontSize:20,
+    color:"coral",
     // marginBottom:10,
     alignItems:"center",
     marginLeft:"auto",
@@ -330,7 +329,7 @@ const styles = StyleSheet.create({
     // borderBottomWidth:1,
     borderBottomLeftRadius:10,
     borderColor:"#003f5c",
-  
+    paddingTop:10,
 
 
   },
@@ -338,7 +337,7 @@ const styles = StyleSheet.create({
     fontWeight:"500",
     fontSize:35,
     padding:15,
-    color:"white",
+    color:"coral",
     // alignItems: 'flex-start',124
     paddingLeft: 10,    // alignItems:"center",
     justifyContent:"center"
@@ -346,7 +345,7 @@ const styles = StyleSheet.create({
   queryview:{
     fontWeight:"700",
     fontSize:15,
-    color:"white",
+    color:"coral",
     paddingTop:20,
     // paddingHorizontal: 10,
     // alignItems: 'flex-start',

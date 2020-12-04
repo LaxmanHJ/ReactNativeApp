@@ -14,7 +14,7 @@ export default class HomeScreen extends React.Component {
   state = {
     isPedometerAvailable: 'checking',
     pastStepCount: 0,
-    currentStepCount:1101,
+    currentStepCount:6034,
     milescovered:0,
     activity:0,
     time: '',
@@ -38,7 +38,6 @@ export default class HomeScreen extends React.Component {
   }
   _loadInitialState=async()=>{
     var phone = await AsyncStorage.getItem('phone');
-    phone = phone.toString();
     this.setState({phone:phone})
 
   }
@@ -70,7 +69,7 @@ export default class HomeScreen extends React.Component {
 
     });
 
-    if(fullTime == "1445")
+    if(fullTime == "222930")
     {
 
       const {activity} = this.state
@@ -80,7 +79,6 @@ export default class HomeScreen extends React.Component {
 
       console.log("date is here",dateformat,activity,currentStepCount,phone)
 
-      console.log("hii");
       fetch('http://localhost:8080/piedpiper/insertTracks.php', {
                 method: 'POST',
                 headers: {
@@ -98,11 +96,11 @@ export default class HomeScreen extends React.Component {
                
               })
             })
-          .then((response) => response)
+          .then((response) => response.json())
             .then((responseData) => {
-                                    console.log("inside responsejson");
+                                    console.log("inside responsejson"+responseData);
                                     console.log('response object:'+JSON.stringify(responseData))
-                                    if (responseData=="insertion_tracks_ok"){
+                                    if (responseData.msg=="insertion_tracks_ok"){
                                       alert(" Inserting to tracks is success")
                                     }
                                     else if(responseData=="insertion_tracks_failed"){
