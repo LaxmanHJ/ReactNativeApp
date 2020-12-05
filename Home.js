@@ -14,7 +14,7 @@ export default class HomeScreen extends React.Component {
   state = {
     isPedometerAvailable: 'checking',
     pastStepCount: 0,
-    currentStepCount:6034,
+    currentStepCount:4000,
     milescovered:0,
     activity:0,
     time: '',
@@ -69,7 +69,7 @@ export default class HomeScreen extends React.Component {
 
     });
 
-    if(fullTime == "222930")
+    if(fullTime == "04550")
     {
 
       const {activity} = this.state

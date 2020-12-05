@@ -1,45 +1,52 @@
 import React, { Component, Children } from 'react';  
-import { View, Text, StyleSheet, Button, AsyncStorage,Image,TouchableOpacity, TextInput} from 'react-native';  
+import { View, Text, StyleSheet, FlatList,Button, AsyncStorage,Image,TouchableOpacity, TextInput} from 'react-native';  
 import Icon from 'react-native-vector-icons/Ionicons';  
 
 
 export default class ImageScreen extends React.Component { 
   state={
-    responseObject:[],
+    names:[],
+    steps:[],
+    userRanks:"",
   }
   
   componentDidMount() {
     this.rankingAlgo();
   }
-  rankingAlgo(){
+  rankingAlgo=()=>{
     var newdata,newdata1,newdata2,objects,arrays;
-    console.log("Rankinf algo is running")
+    var nameArray =[];
+    var stepsArray =[];
+    var useridArray =[];
+
+    console.log("Ranking algo is running")
     fetch('http://localhost:8080/piedpiper/ranking.php', {
                 method: 'GET',
                 
             })
           .then((response) => response.json())
             .then((responseData) => {
-                                      
-                                     newdata = JSON.stringify(responseData)
-                                     newdata2 = JSON.parse(newdata)
-                                    //  newdata1 = Object.keys(newdata2).map(key => ({[key]: newdata2[key]}))
-                                     console.log("newdata1 responsejson"+responseData[0]);
+                                    newdata1 = responseData[0];
+                                    console.log(newdata1,responseData);
+                                    arrays = Object.keys(responseData).length;
+                                    console.log("newdata1 responsejson"+arrays);
 
-                                    console.log('response object:'+JSON.stringify(responseData))
+                                   var  finalArray = responseData.map(function (obj) {
+                                      console.log(obj.name,obj.steps,obj.userid);
+                                      nameArray.push(obj.name)
+                                      stepsArray.push(obj.steps)
+                                      useridArray.push(obj.userid)
+                                      console.log(nameArray)
+
+                                    });
+                                    console.log(nameArray)
+                                 
                                     this.setState({
-                                      responseObject:newdata
+                                      names:nameArray,
+                                      steps:stepsArray,
+                                      userRanks:arrays,
                                     })
-                                    // if (responseData.msg=="insertion_tracks_ok"){
-                                    //   alert(" Inserting to tracks is success")
-                                    // }
-                                    // else if(responseData=="insertion_tracks_failed"){
-                                    //   alert("Inserting to tracks is failed")
-
-                                    // }
-                                    // else {
-                                    // alert("Idk What happend")
-                                    // }
+                                   
 
             }).catch((error)=> {
               console.error("Error Message 1"+error)
@@ -51,26 +58,47 @@ export default class ImageScreen extends React.Component {
 
 
   render() {  
-    const {responseObject} = this.state;
+    const {names,steps,userRanks} = this.state;
+    var rankList=[]
+    for(let i = 1; i <= userRanks; i++){
+      rankList.push(i);
+
+    }
       return (  
       <View style={styles.container}>
             <Text style={styles.logo}>Rankings</Text>
-            <View style={styles.stepscontainer}> 
-                 <View style={styles.flexcontainer}>
-                      <Text style={styles.showtext}>Player</Text>
-                      <Text style={styles.showtext2}>Steps</Text>
-                      <Text style={styles.showtext3}>Rank</Text>
-
+           
+            <View style={styles.gridParent}> 
+                <View style={styles.gridChild}>
+                    <View>
+                      <View style={styles.stepscontainer}> 
+                        <Text style={styles.showtext}>Player</Text></View>
+                            { names.map((item, key)=>(
+                              <Text key={key} style={styles.TextStyle}> { item } </Text>                      
+                          )
+                          )}
+                      </View>
+                      <View>
+                      <View style={styles.stepscontainer}> 
+                         <Text style={styles.showtext}>Steps</Text></View>
+                            { steps.map((item, key)=>(
+                                <Text key={key} style={styles.TextStyle}> { item } </Text>
+                            )
+                            )}
+                      </View>
+                      <View>
+                      <View style={styles.stepscontainer}> 
+                           <Text style={styles.showtext3}>Rank</Text></View>
+                                  {rankList.map((item, key)=>(
+                                      <Text key={key} style={styles.TextStyle}> #{ item } </Text>                              
+                                  )
+                                  )}
+                    </View>
                   </View>
-                 {/* {responseObject.map((values,i) =>(
-                   <Card key={i}>
-                     <Text>{values.steps}</Text>
-                   </Card>
-                 ))
-                 } */}
-                 <Text>{responseObject}</Text>
             </View>
-      </View>
+        </View>
+      
+
       );
   }  
 } 
@@ -83,6 +111,11 @@ const styles = StyleSheet.create({
     // alignItems: 'center',
     // justifyContent: 'center',
   },
+  TextStyle:{
+    padding:5,
+    fontSize:20,
+    width:"100%"
+  },
   logo:{
     fontWeight:"bold",
     fontSize:40,
@@ -90,14 +123,7 @@ const styles = StyleSheet.create({
     marginBottom:20,
     padding:10,
   },
-  stepscontainer:{
-    borderRadius:10,
-    paddingLeft:10,
-    backgroundColor:"moccasin",
-    width:"100%",
-    paddingTop:2
-
-  },
+  
   showtext:{
     fontSize:15,
     color:"tomato",
@@ -105,12 +131,7 @@ const styles = StyleSheet.create({
     padding:5,
     
   },
-  showtext2:{
-    fontSize:15,
-    color:"tomato",
-    fontWeight:'500',
-    padding:5,
-  },
+  
   showtext3:{
     fontSize:15,
     color:"tomato",
@@ -122,13 +143,20 @@ const styles = StyleSheet.create({
     //justifyContent:'flex-end'
 
   },
-  flexcontainer:{
-    // width: '40%',
+  stepscontainer:{
+    borderRadius:5,
+    //paddingLeft:10,
+   // backgroundColor:"moccasin",
+    width:"100%",
+    padding:3
+
+  },
+  gridParent:{
+    
+  },
+  gridChild:{
     justifyContent: 'space-around',
     flexDirection:'row',
     flexWrap:'wrap',
-    // alignSelf:'center'
-   // justifyContent:'flex-start'
   }
-
 });

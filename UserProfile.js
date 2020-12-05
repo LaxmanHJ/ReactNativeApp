@@ -68,8 +68,7 @@ export default class App extends React.Component {
       const {navigation} = this.props;
       
     
-        console.log("this.props")
-        console.log(this.state.name);
+        
  
       return (
         <View style={styles.container}>
