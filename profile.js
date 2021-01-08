@@ -9,19 +9,20 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import HomeScreen from './Home';
 import ProfileScreen from './UserProfile';
 import ImageScreen from './Image';
+import TeamScreen from './Team';
 
 const TabNavigator = createMaterialBottomTabNavigator(  
     {  
       
-        Home: { screen: HomeScreen,  
-
+        Home: { 
+            screen: HomeScreen,  
             navigationOptions:{  
-                tabBarLabel:'Home',  
-                tabBarIcon: ({ tintColor }) => (  
-                    <View>  
-                        <Icon style={[{color: tintColor}]} size={25} name={'ios-home'}/>  
-                    </View>),  
-            }  
+              tabBarLabel:'Home',  
+              tabBarIcon: ({ tintColor }) => (  
+                  <View>  
+                      <Icon style={[{color: tintColor}]} size={25} name={'ios-home'}/>  
+                  </View>),  
+                                }  
         },
         Image: {  
           screen: ImageScreen,  
@@ -29,10 +30,20 @@ const TabNavigator = createMaterialBottomTabNavigator(
               tabBarLabel:'RanKINGs',  
               tabBarIcon: ({ tintColor }) => (  
                   <View>  
-                      <Icon style={[{color: tintColor}]} size={25} name={'ios-image'}/>  
+                      <Icon style={[{color: tintColor}]} size={25} name={'ios-podium'}/>  
                   </View>),  
           }  
-      },   
+      }, 
+      Team: { 
+        screen: TeamScreen,  
+        navigationOptions:{  
+            tabBarLabel:'Team',  
+            tabBarIcon: ({ tintColor }) => (  
+                <View>  
+                    <Icon style={[{color: tintColor}]} size={25} name={'ios-people'}/>  
+                </View>),  
+        }  
+    },  
         Profile: { screen: ProfileScreen,  
             navigationOptions:{  
                 tabBarLabel:'Profile',  
@@ -134,117 +145,3 @@ const styles = StyleSheet.create({
 
 export default createAppContainer(TabNavigator);
 
-// class HomeScreen extends React.Component {  
-//   render() {  
-//     return (  
-//         <View style={styles.container}>  
-//           <Text>Home Screen</Text>  
-//         </View>  
-//     );  
-//   }  
-// }  
-
-
-// class ProfileScreen extends React.Component {  
-//   state = {
-//         UserPhone: "",
-//         UserName:"",
-//         UserId:"",
-//         UserAadhar:"",
-//         UserRegion:"",
-//         UserPincode:"",
-//         UserState:"",
-//         UserCows:"",
-    
-//       }
-//       _logout = async()=>{
-//         alert("Logouted")
-//         await AsyncStorage.clear();
-//         this.props.navigation.navigate('Auth')
-//       }
-    
-//   render() {  
-    
-
-// const {navigation} = this.props;
-// let name = JSON.stringify(navigation.getParam("responseData"));
-// // {this.saveData.bind(this,name)} 
-// // {this.retrieveData()}
-
-
-// return (
-//   <View style={styles.container}>
-
-//   <View style={styles.logocontainer} >
-    
-//           <Text style={styles.pic}>Welcome {this.state.UserName}</Text>
-
-//   </View>
-//   <Image source={require('./images/pic.jpg')} style={styles.image}/>
-
-//   <ScrollView>
-
-// <View style={styles.profilecont}>
-
-//   <View style={styles.inputView} >
-//     <Text style={styles.queryview}>Aadharnumber </Text>
-//     <TextInput  
-//       style={styles.inputText}
-//       placeholder= {this.state.UserAadhar}
-//       placeholderTextColor="#003f5c"
-//       onChangeText={phone => this.setState({phone})}/>
-//   </View>
-
-//   <View style={styles.inputView} >
-//     <Text style={styles.queryview}>Name </Text>
-//     <TextInput  
-//       style={styles.inputText}
-//       placeholder={this.state.UserName}
-//       placeholderTextColor="#003f5c"
-//       onChangeText={phone => this.setState({phone})}/>
-//   </View>
-
-
-//   <View style={styles.inputView} >
-//     <Text style={styles.queryview}>Phone</Text>
-//     <TextInput  
-//       style={styles.inputText}
-//       placeholder={this.state.UserPhone}
-//       placeholderTextColor="#003f5c"
-//       onChangeText={phone => this.setState({phone})}/>
-//   </View>
-
-//   <View style={styles.inputView} >
-//     <Text style={styles.queryview}>Pincode </Text>
-//     <TextInput  
-//       style={styles.inputText}
-//       placeholder={this.state.UserPincode}
-//       placeholderTextColor="#003f5c"
-//       onChangeText={phone => this.setState({phone})}/>
-//   </View>
-
-//           {/* <TouchableOpacity onPress ={this.saveData.bind(this,name)}> */}
-//           {/* <Text>Click to save data</Text>
-//           </TouchableOpacity>   */}
-
-//       {/* <Button onPress={this.retrieveData} title="Show saved Object"/> */}
-//       <Button onPress={this._logout} title="Logout"/>
-
-//       </View>
-//       </ScrollView>
-
-
-//         </View>  
-//     );  
-//   }  
-// }  
- 
-// class ImageScreen extends React.Component {  
-//     render() {  
-//         return (  
-//             <View style={styles.container}>  
-//                 <Text>Cart Screen</Text>  
-//             </View>  
-//         );  
-//     }  
-// } 
