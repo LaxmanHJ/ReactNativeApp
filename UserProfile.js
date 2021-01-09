@@ -5,6 +5,11 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { createStackNavigator } from 'react-navigation-stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 
+import * as ImagePicker from 'expo-image-picker';
+import Constants from 'expo-constants';
+import * as Permissions from 'expo-permissions';
+
+
 import {  
   createSwitchNavigator,  
   createAppContainer,  
@@ -27,6 +32,8 @@ export default class App extends React.Component {
     UserHeight:"",
     UserWeight:"",
     UserDob:"",
+    image: null,
+
     
   }
 
@@ -39,11 +46,15 @@ export default class App extends React.Component {
   }
 
 
-  componentDidMount(){
+  async componentDidMount(){
             this._loadInitialState().done();
+
 
       }
   
+
+   
+
   // AsyncStorage for login data processing
     _loadInitialState=async()=>{
         var name = await AsyncStorage.getItem('name');
@@ -66,7 +77,8 @@ export default class App extends React.Component {
     render() {  
   
       const {navigation} = this.props;
-      
+      let { image } = this.state;
+
     
         
  
@@ -122,8 +134,7 @@ export default class App extends React.Component {
             <Button onPress={this._logout} title="Logout"/>
 
             </ScrollView>
-       
-
+      
 </View>
 
     
