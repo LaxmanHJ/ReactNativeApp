@@ -1,6 +1,6 @@
 <?php
 
-$phone=$_GET['phone'];
+$TeamId=$_GET['TeamId'];
 include "include/dbconn.php";
   
 // Inintialize URL to the variable 
@@ -11,28 +11,32 @@ include "include/dbconn.php";
 //parse_str($url_components['query'], $params); 
 //$phone = $params['phone']; 
       
-  if(!empty($phone))
+  if(!empty($TeamId))
   {
-    $fetch = "SELECT T.NAME,T.Level,T.Location,us.name username
-              FROM Team T 
-              Inner join usersignup us 
-              WHERE phone = '$phone' and  T.TeamId = us.TeamId;";
+    $fetch = "SELECT us.name 
+              FROM usersignup us 
+              INNER JOIN TeamDetails Td ON us.phone = Td.UserId 
+              WHERE Td.TeamId = $TeamId;";
+   
 
+   
     $result= mysqli_query($conn,$fetch);
-    $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-    $count = mysqli_num_rows($result);
-    $myObj = new StdClass;
-    if($count>=1){
-          $myObj->msg = "success";
-          $myObj->name=$row['NAME'];
-          $myObj->username=$row['username'];
-          $myObj->level=$row['Level'];
-          $myObj->Location=$row['Location'];
-          $myJSON = json_encode($myObj);
-          echo $myJSON;
+  //  $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+  $stack = array();
+    while( $row = mysqli_fetch_array( $result, MYSQLI_ASSOC ) ) {
+            //array_push( $stack, $row );
+            $stack[]=$row;
     }
-    else{
-      $myObj->msg = "NoTeamFound";
+
+    $myObj = new StdClass;
+    $count = mysqli_num_rows($result);
+    if($count>=1){
+        $myObj->msg = "success";
+        $myObj->userList=$stack;
+        $myJSON = json_encode($myObj);
+        echo $myJSON;
+    }else{
+      $myObj->msg = "NoUsersFound";
       $myJSON = json_encode($myObj);
       echo $myJSON;
     }
