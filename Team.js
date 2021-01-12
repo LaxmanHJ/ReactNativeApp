@@ -16,6 +16,7 @@ export default class TeamScreen extends React.Component {
     teamLevel:'',
     teamId:'',
     userId:'',
+    teamMembers:[],
   }
   componentDidMount() {
     this._loadInitialState().done();
@@ -48,6 +49,9 @@ export default class TeamScreen extends React.Component {
                                       teamLevel:responseData.level,
                                       teamId:responseData.TeamId,
                                     })
+                                    //get team members details
+                                    this.teamMembers(this.state.teamId);
+
                                   }else if(responseData.msg="NoTeamFound"){
                                     console.log(responseData.msg);
                                     this.setState({
@@ -60,6 +64,45 @@ export default class TeamScreen extends React.Component {
               console.error("Error Message 1"+error)
             });
       }
+
+
+      teamMembers=(teamId)=>{
+        const usersData=[];
+        console.log("Fetching Team Members of TeamId",teamId);
+        let endpoint = `http://localhost:8080/piedpiper/TeamMembers.php?TeamId=${encodeURIComponent(teamId)}`;
+        fetch(endpoint, {
+                    method: 'GET',
+                    
+                })
+              .then((response) => response.json())
+                .then((responseData) => {
+                                        console.log(responseData);
+                                        if (responseData.msg=='success'){
+                                        responseData.userList.map(function (obj){
+                                        console.log(obj.name,obj.TotalSteps);
+                                        usersData.push({
+                                          name:obj.name,
+                                          TotalSteps:obj.TotalSteps
+                                                       })                                       
+                                         })
+                                        this.setState({                                        
+                                          teamMembers:usersData,
+                                        })
+                                        console.log("Teammembers",this.state.teamMembers);
+
+                                        }else if(responseData.msg="teamMembers"){
+                                          console.log(responseData.msg);
+                                          this.setState({
+                                          teamMembers:null,
+                                          })
+                                      }
+                                       
+                }).catch((error)=> {
+                  console.error("Error Message 1"+error)
+                });
+          }
+
+
   render() { 
     const isTeam = parseInt(this.state.TeamId);
     return (  
@@ -119,12 +162,32 @@ export default class TeamScreen extends React.Component {
             <View >
                   {(isTeam) != 0
                       ? 
+                  <View>
                     <View style={styles.TeamView}>
                       <Text style={styles.TeamViewHeaderFont}>{this.state.teamName}</Text>
                       <Text>Level                       {this.state.teamLevel}</Text>
                       <Text>Location                    {this.state.teamLocation}</Text>
-
                     </View>
+
+                    <Text style={styles.TeamViewHeaderFont1}>Team Members</Text>
+
+                    <View style={styles.TeamView}>
+                      <View style={styles.gridChild}>
+                          <View>
+                              <Text style={styles.showtext}>Player</Text>
+                              {this.state.teamMembers.map((key, index) => (
+                                        <Text key={index}>{key.name}  </Text>
+                                    ))} 
+                          </View>
+                          <View>
+                              <Text style={styles.showtext}>TotalSteps</Text>
+                              {this.state.teamMembers.map((key, index) => (
+                                        <Text key={index}>  {key.TotalSteps}</Text>
+                                    ))} 
+                          </View>
+                      </View>
+                    </View>
+                  </View>
                      : 
                      <Text>No Team to Display</Text>
                 }
@@ -147,7 +210,22 @@ const styles = StyleSheet.create({
   }, 
   TeamViewHeaderFont:{
     fontSize:30,
+    margin:5
 
+  },
+  TeamViewHeaderFont1:{
+    fontSize:25,
+    color:"tomato",
+    fontWeight:'500',
+    padding:5,
+    margin:5,
+  },
+  showtext:{
+    fontSize:15,
+    color:"tomato",
+    fontWeight:'500',
+    padding:5,
+    
   },
   logo:{
     fontWeight:"bold",

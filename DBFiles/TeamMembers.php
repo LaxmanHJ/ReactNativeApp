@@ -13,8 +13,9 @@ include "include/dbconn.php";
       
   if(!empty($TeamId))
   {
-    $fetch = "SELECT us.name 
+    $fetch = "SELECT us.name,us.TotalSteps
               FROM usersignup us 
+              -- inner Join tracks t ON t.userid = us.phone
               INNER JOIN TeamDetails Td ON us.phone = Td.UserId 
               WHERE Td.TeamId = $TeamId;";
    

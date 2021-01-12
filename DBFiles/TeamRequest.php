@@ -13,25 +13,25 @@ include "include/dbconn.php";
       
   if(!empty($phone))
   {
-    $fetch = "SELECT T.NAME,T.Level,T.Location,us.name username
+    $fetch = "SELECT T.NAME,T.TeamId,T.Level,T.Location,us.name username
               FROM Team T 
               Inner join usersignup us 
               WHERE phone = '$phone' and  T.TeamId = us.TeamId;";
 
     $result= mysqli_query($conn,$fetch);
     $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-    $count = mysqli_num_rows($result);
     $myObj = new StdClass;
+    $count = mysqli_num_rows($result);
     if($count>=1){
-          $myObj->msg = "success";
-          $myObj->name=$row['NAME'];
-          $myObj->username=$row['username'];
-          $myObj->level=$row['Level'];
-          $myObj->Location=$row['Location'];
-          $myJSON = json_encode($myObj);
-          echo $myJSON;
-    }
-    else{
+        $myObj->msg = "success";
+        $myObj->name=$row['NAME'];
+        $myObj->TeamId=$row['TeamId'];
+        $myObj->username=$row['username'];
+        $myObj->level=$row['Level'];
+        $myObj->Location=$row['Location'];
+        $myJSON = json_encode($myObj);
+        echo $myJSON;
+    }else{
       $myObj->msg = "NoTeamFound";
       $myJSON = json_encode($myObj);
       echo $myJSON;
