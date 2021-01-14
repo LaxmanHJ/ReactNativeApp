@@ -38,7 +38,7 @@ export default class TeamScreen extends React.Component {
                 method: 'GET',
                 
             })
-          .then((response) => response.json())
+          .then((response) => response.json()) //response.text() gives error detail
             .then((responseData) => {
                                     console.log(responseData);
                                     console.log(typeof(responseData.TeamId));
@@ -90,7 +90,7 @@ export default class TeamScreen extends React.Component {
                                         })
                                         console.log("Teammembers",this.state.teamMembers);
 
-                                        }else if(responseData.msg="teamMembers"){
+                                        }else if(responseData.msg="NoUsersFound"){
                                           console.log(responseData.msg);
                                           this.setState({
                                           teamMembers:null,
@@ -104,7 +104,7 @@ export default class TeamScreen extends React.Component {
 
 
   render() { 
-    const isTeam = parseInt(this.state.TeamId);
+    const isTeam = parseInt(this.state.teamId);
     return (  
       <View style={styles.container}> 
             <Modal
@@ -117,20 +117,37 @@ export default class TeamScreen extends React.Component {
             >
             <View style={styles.centeredView}>
               <View style={styles.modalView}>
-                  <TouchableHighlight
-                    style={styles.openButton }
-                    onPress={() => {
-                      //this.state.setModalVisible(!this.state.modalVisible);
-                      this.setState({modalVisible:!this.state.modalVisible});          
-
-                    }}
-                  >
+                  
                     <View style={styles.gridChild}>
-                        <Text style={styles.modalText}>Cancel</Text>
-                        <Text style={styles.modalText}>Create Team</Text>
+                      <View>
+                          <TouchableHighlight
+                                style={styles.openButton }
+                                onPress={() => {
+                                  //this.state.setModalVisible(!this.state.modalVisible);
+                                  this.setState({modalVisible:!this.state.modalVisible});          
+
+                                }}
+                              >
+                              <Text style={styles.modalText}>Cancel</Text>
+                              </TouchableHighlight>
+                        </View>
+                        <View>
+                          <TouchableHighlight
+                                style={styles.openButton }
+                                onPress={() => {
+                                  //this.state.setModalVisible(!this.state.modalVisible);
+                                  this.setState({modalVisible:!this.state.modalVisible});          
+                                  this.props.navigation.navigate("createTeamScreen");
+                                }}
+                              >
+                          <Text style={styles.modalText}>Create Team</Text>
+                          </TouchableHighlight>
+
+                        </View>
                     </View>
 
-                  </TouchableHighlight>
+
+
 
                   <View style={styles.inputView} >
                     <TextInput  

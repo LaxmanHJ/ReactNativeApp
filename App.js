@@ -9,11 +9,12 @@ import { createStackNavigator } from 'react-navigation-stack'
 import LoginScreen from './LoginScreen';
 import SignupScreen from './SignupScreen1';
 import ProfileScreen from './profile';
-
+import createTeamScreen from './createTeam';
 
 const RootStack = createStackNavigator({
   ProfileScreen:ProfileScreen,
-  SignupScreen:SignupScreen
+  SignupScreen:SignupScreen,
+  createTeamScreen:createTeamScreen,
   
 },{
 headerMode: 'none',
