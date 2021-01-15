@@ -6,4 +6,4 @@
 * Rating ∝ Ranking of user.
 * App UI Overview
 
-![alt text](/file:///Users/laxmanjeergal/Desktop/Fihit/FitPiperPics/FitPiperPics.png)
+![AppUIOverview](https://drive.google.com/file/d/16dK1DVLR3NMQjI_ElYIWKpn7zCQQ1QeL/view?usp=sharing)
