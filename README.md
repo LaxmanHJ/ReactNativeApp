@@ -6,4 +6,4 @@
 * Rating ∝ Ranking of user.
 * App UI Overview
 
-![AppUIOverview](https://drive.google.com/file/d/16dK1DVLR3NMQjI_ElYIWKpn7zCQQ1QeL/view)
+![AppUIOverview](https://github.com/LaxmanHJ/ReactNativeApp/blob/master/UI/FitPiperPics.png)
