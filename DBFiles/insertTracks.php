@@ -17,9 +17,9 @@
             $exc=mysqli_query($conn,$add);
             if($exc==true)
             {
-                $myObj = new StdClass1;
-                $myObj->msg="insertion_tracks_ok";
-                $myJSON = json_encode($myObj);
+                $myObjnew = new StdClass;
+                $myObjnew->msg="insertion_tracks_ok";
+                $myJSON = json_encode($myObjnew);
                 echo $myJSON;
 
                 // mkdir("userdata/".$phone,true);

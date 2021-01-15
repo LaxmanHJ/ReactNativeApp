@@ -13,10 +13,17 @@ include "include/dbconn.php";
       
   if(!empty($phone))
   {
-    $fetch = "SELECT T.NAME,T.TeamId,T.Level,T.Location,us.name username
+    // $fetch = "SELECT T.NAME,T.TeamId,T.Level,T.Location,us.name username
+    //           FROM Team T 
+    //           Inner join usersignup us 
+    //           Inner join TeamDetails Td
+    //           on T.Tea
+    //           WHERE phone = '$phone' and  T.TeamId = us.TeamId;";
+    $fetch = "SELECT T.NAME,T.TeamId,T.Level,T.Location
               FROM Team T 
-              Inner join usersignup us 
-              WHERE phone = '$phone' and  T.TeamId = us.TeamId;";
+              Inner join TeamDetails Td 
+              WHERE Td.UserId = '$phone' and T.TeamId = Td.TeamId";
+
 
     $result= mysqli_query($conn,$fetch);
     $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
@@ -26,7 +33,6 @@ include "include/dbconn.php";
         $myObj->msg = "success";
         $myObj->name=$row['NAME'];
         $myObj->TeamId=$row['TeamId'];
-        $myObj->username=$row['username'];
         $myObj->level=$row['Level'];
         $myObj->Location=$row['Location'];
         $myJSON = json_encode($myObj);
@@ -38,7 +44,7 @@ include "include/dbconn.php";
     }
   }else
   {     
-          echo json_decode("some error happened  phone/userid is empty");
+          echo json_decode("some error happened or  phone/userid is empty");
 }
 
 
